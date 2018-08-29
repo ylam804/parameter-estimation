@@ -21,9 +21,9 @@ def fun_rosenbrock_hessian(x):
     # type: (object) -> object
     """
     Analytic hessian of the rosenbrock function
+
     """
-    return np.array([[1200*x[0]**2 - 400*x[1] + 2, -400*x[0]],
-                 [-400*x[0], 200]])
+    return np.array([[1200*x[0]**2 - 400*x[1] + 2, -400*x[0]], [-400*x[0], 200]])
 
 class Parameter_estimation_tests(unittest.TestCase):
     def test_estimation(self):
@@ -31,7 +31,7 @@ class Parameter_estimation_tests(unittest.TestCase):
         Test the parameter estimation routines
         """
         ps = para_est.estimation()
-        ps.set_initial_parameters(np.array([-1.9, 2]))
+        ps.set_initial_parameters(np.array([-2, 2]))
         ps.set_objective_function(fun_rosenbrock)
         ps.optimise()
         ps.set_objective_function(fun_rosenbrock_mse)

@@ -81,22 +81,25 @@ class estimation:
         n = len(x)
         A = np.zeros(n)
         B = np.zeros(n)
+        g = np.zeros(n)
         ee = stepsize * np.eye(n)
-
         # First-order derivatives: 2n function calls needed
         for i in range(n):
             A[i] = objfun(x + ee[:, i])
             B[i] = objfun(x - ee[:, i])
+            g[i] = (A[i] - B[i]) / (2*ee[i,i])
 
         # Second-order derivatives based on function calls only (Abramowitz and Stegun 1972, p.884): for dense Hessian, 2n+4n^2/2 function calls needed.
-
+        # 25.3.24 and 25.3.26
         H = np.zeros((n, n))
         for i in range(n):
             C = objfun(x + 2 * ee[:, i])
             E = objfun(x)
             F = objfun(x - 2 * ee[:, i])
             H[i, i] = (- C + 16 * A[i] - 30 * E + 16 * B[i] - F) / (12 * (ee[i, i] ** 2))
+
             for j in range(i + 1, n):
+
                 G = objfun(x + ee[:, i] + ee[:, j])
                 I = objfun(x + ee[:, i] - ee[:, j])
                 J = objfun(x - ee[:, i] + ee[:, j])
@@ -107,7 +110,10 @@ class estimation:
         import cmath
         n = len(H)
         detH = np.linalg.det(H)
-        condH = 1.0 / np.linalg.cond(H)
+        condH = np.linalg.cond(H)
+        print(condH)
+        condH1 = 1/np.linalg.cond(H)
+        print(condH1)
         H0 = np.zeros((n, n))
         for j in range(n):
             for k in range(n):
