@@ -13,7 +13,8 @@ def fun_rosenbrock_mse(x):
     An objective function for testing optimisation routines that return scalars
     """
     vector = np.array([100 * (x[1] - x[0] ** 2), (1 - x[0])])
-    mse = np.sum(vector * vector)
+    #mse = np.sum(vector * vector)
+    mse = sum(100.0 * (x[1:] - x[:-1] ** 2.0) ** 2.0 + (1 - x[:-1]) ** 2.0)
 
     return mse
 
@@ -47,6 +48,15 @@ class Parameter_estimation_tests(unittest.TestCase):
         print('quasi-Newton Hessian_approx')
         print(quasi_hessian_approx)
         self.assertEqual(True, False)
+
+# uncertainty estimate of derivative prediction
+#         s = sqrt(sum((der_init - rmat * rombcoefs). ^ 2, 1));
+#         rinv = rromb\eye(nexpon + 1);
+#         cov1 = sum(rinv. ^ 2, 2); % 1
+#         spare
+#         dof
+#         errest = s
+#         '*12.7062047361747*sqrt(cov1(1));
 
 
 if __name__ == '__main__':
