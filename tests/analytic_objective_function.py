@@ -6,7 +6,7 @@ def fun_rosenbrock(x):
     """
     An objective function for testing optimisation routines that return vectors
     """
-    return np.array([100 * (x[1] - x[0] ** 2), (1 - x[0])])
+    return np.array([10 * (x[1] - x[0] ** 2), (1 - x[0])])
 
 def fun_rosenbrock_mse(x):
     """
